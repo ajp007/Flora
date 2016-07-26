@@ -7,6 +7,9 @@ from os import mkdir, chdir, listdir
 from os.path import join, exists
 import ConfigUpdater as CU
 import checks
+from importlib import reload
+import plugin_install as updater
+import update as full_updater
 checks = checks
 CU = CU
 def y_or_n(question: str):
@@ -78,14 +81,18 @@ async def on_ready():
     print('Prefix:', flora.command_prefix)
     print('Started at:',flora.uptime)
     print('Plugins Loaded:', flora.loaded_plugins)
+1
+
 class Core:
     def __init__(self, flora):
         self.flora = flora
+
     @commands.group(pass_context=True)
     @checks.is_owner()
     async def plugin(self, ctx):
         if ctx.invoked_subcommand is None:
             await self.flora.say('Invalid criteria passed "{0.subcommand_passed}"'.format(ctx))
+
     @plugin.command()
     async def load(self, plugin_name):
         try:
@@ -94,6 +101,7 @@ class Core:
             await self.flora.say(':ok_hand:')
         except:
             await self.flora.say('Failed to load {}'.format(plugin_name))
+
     @plugin.command()
     async def unload(self, plugin_name):
         try:
@@ -102,6 +110,7 @@ class Core:
             await self.flora.say(':ok_hand:')
         except:
             await self.flora.say('Failed to unload {}'.format(plugin_name))
+
     @plugin.command()
     async def reload(self, plugin_name):
         unloaded = False
@@ -116,9 +125,24 @@ class Core:
                 await self.flora.say('Failed To Reload plugin, plugin has been unloaded')
             else:
                 await self.flora.say('Was the plugin Ever loaded?')
-    @plugin.command()
+
+    @plugin.command(name='list')
     async def list_plugins(self):
         await self.flora.whisper(get_plugins())
+
+    @plugin.command(name='update', discription='Updates Plugins')
+    async def update_plugins(self):
+        """Updates plugins"""
+        reload(updater)
+        await updater.installer()
+        await self.flora.say('Done')
+
+    @checks.is_owner()
+    @commands.command(name='core.update')
+    async def full_update(self):
+        await full_updater.update()
+        await self.say('Done')
+
 
 if __name__ == '__main__':
     plugins = get_plugins()
