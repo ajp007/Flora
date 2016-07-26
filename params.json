@@ -1,0 +1,6 @@
+{
+  "name": "Flora",
+  "tagline": "Flora - A friendly Discord Bot",
+  "body": "# Flora\r\nFlora - A friendly Discord Bot\r\n\r\n#Requirements\r\nPython 3.5\r\n\r\n##Pip Dependencies\r\n\r\n* discord.py\r\n* arrow\r\n* BeautifulSoup4 \r\n* lxml\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
