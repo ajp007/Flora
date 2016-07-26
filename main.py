@@ -83,11 +83,11 @@ class Core:
         self.flora = flora
     @commands.group(pass_context=True)
     @checks.is_owner()
-    async def plugin(ctx):
+    async def plugin(self, ctx):
         if ctx.invoked_subcommand is None:
             await self.flora.say('Invalid criteria passed "{0.subcommand_passed}"'.format(ctx))
     @plugin.command()
-    async def load(plugin_name):
+    async def load(self, plugin_name):
         try:
             self.flora.load_extension(plugin_name)
             self.flora.loaded_plugins += 1
@@ -95,15 +95,15 @@ class Core:
         except:
             await self.flora.say('Failed to load {}'.format(plugin_name))
     @plugin.command()
-    async def unload(plugin_name):
+    async def unload(self, plugin_name):
         try:
             self.flora.unload_extention(plugin_name)
             self.flora.loaded_plugins -= 1
             await self.flora.say(':ok_hand:')
         except:
-            await self.flora.say('Failed to unload {}'.format(plugin_name1))
+            await self.flora.say('Failed to unload {}'.format(plugin_name))
     @plugin.command()
-    async def reload(plugin_name):
+    async def reload(self, plugin_name):
         unloaded = False
         try:
             self.flora.unload_extension(plugin_name)
@@ -117,7 +117,7 @@ class Core:
             else:
                 await self.flora.say('Was the plugin Ever loaded?')
     @plugin.command()
-    async def list_plugins():
+    async def list_plugins(self):
         await self.flora.whisper(get_plugins())
 
 if __name__ == '__main__':

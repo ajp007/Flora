@@ -44,7 +44,7 @@ def is_owner_check(msg) -> bool:
         return False
 
 # noinspection PyBroadException
-def is_owner() -> bool:
+def is_owner():
     return commands.check(lambda ctx: is_owner_check(ctx.message))
 
 # noinspection PyBroadException
@@ -58,7 +58,7 @@ def is_allowed_check(msg) -> bool:
         return False
 
 # noinspection PyBroadException
-def is_allowed() -> bool:
+def is_allowed():
     return commands.check(lambda ctx: is_allowed_check(ctx.message))
 
 # noinspection PyBroadException
@@ -69,7 +69,7 @@ def is_home_server_check(msg) -> bool:
         return False
 
 # noinspection PyBroadException
-def is_home_server() -> bool:
+def is_home_server():
     return commands.check(lambda ctx: is_home_server_check(ctx.message))
 
 # noinspection PyBroadException
@@ -82,7 +82,7 @@ def server_access_check(msg) -> bool:
         return False
 
 # noinspection PyBroadException
-def server_access() -> bool:
+def server_access():
     return commands.check(lambda ctx: server_access_check(ctx.message))
 
 def global_blacklist_check(msg) -> bool:
@@ -94,7 +94,7 @@ def global_blacklist_check(msg) -> bool:
 def global_blacklist():
     return commands.check(lambda ctx: global_blacklist_check(ctx.message))
 
-def discord_server_owner_check(msg):
+def discord_server_owner_check(msg) -> bool:
     try:
         return msg.author == msg.server.owner
     except:
@@ -110,7 +110,7 @@ if c is None:
 try:
     c['owner id']
 except:
-    c['owner id'] = config['owner_id']
+    c['owner id'] = get_input('owner id\n>>> ', is_list=False, is_number=True)
 try:
     c['allowed roles']
 except:
