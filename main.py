@@ -141,8 +141,10 @@ class Core:
     @commands.command(name='core.update')
     async def full_update(self):
         await full_updater.update()
-        await self.say('Done')
-
+        await self.flora.say('Done')
+    @commands.command()
+    async def uptime(self):
+        await self.flora.say('Flora started up {}'.format(flora.uptime.humanize()))
 
 if __name__ == '__main__':
     plugins = get_plugins()
